@@ -169,7 +169,13 @@ def custom_count(input_list, value):
 
     """
 
-    return 0
+    num_appearances = 0
+
+    for item in input_list:
+        if item == value:
+            num_appearances = num_appearances + 1
+
+    return num_appearances
 
 
 def custom_reverse(input_list):
@@ -188,7 +194,7 @@ def custom_reverse(input_list):
 
     """
 
-    pass
+    input_list[:] = input_list[::-1]
 
 
 def custom_contains(input_list, value):
@@ -208,7 +214,14 @@ def custom_contains(input_list, value):
 
     """
 
-    return None
+    does_contain = False
+
+    for item in input_list:
+        if item == value:
+            does_contain = True
+            break
+
+    return does_contain
 
 
 def custom_equality(some_list, another_list):
@@ -227,7 +240,17 @@ def custom_equality(some_list, another_list):
 
     """
 
-    return None
+    is_equal = True
+
+    try:
+        for index, item in enumerate(some_list):
+            if not some_list[index] == another_list[index]:
+                is_equal = False
+                break
+    except IndexError:
+        return False
+
+    return is_equal
 
 
 # This is the part were we actually run the doctests.
