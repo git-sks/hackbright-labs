@@ -108,7 +108,10 @@ def custom_remove(input_list, value):
 
     """
 
-    pass
+    for index, item in enumerate(input_list):
+        if item == value:
+            del input_list[index]
+            break
 
 
 def custom_pop(input_list):
@@ -127,7 +130,10 @@ def custom_pop(input_list):
 
     """
 
-    return None
+    pop_item = input_list[-1]
+    del input_list[-1]
+
+    return pop_item
 
 
 def custom_index(input_list, value):
@@ -143,7 +149,11 @@ def custom_index(input_list, value):
 
     """
 
-    return 0
+    for index, item in enumerate(input_list):
+        if item == value:
+            return index
+
+    return None
 
 
 def custom_count(input_list, value):
