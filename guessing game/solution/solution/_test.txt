@@ -1,0 +1,72 @@
+Since this is interactive, let's have a fake input handler:
+
+    >>> import sys
+    >>> def fake_input(prompt):
+    ...     sys.stdout.write(prompt)
+    ...     v = _inputs.pop(0)
+    ...     print(v)
+    ...     return v
+
+    >>> try:
+    ...     import __builtin__ as b    # Python 2
+    ... except ImportError:
+    ...     import builtins as b       # Python 3
+
+    >>> b.raw_input = b.input = fake_input
+
+And randint should always return The Answer:
+
+    >>> import random
+    >>> random.randint = lambda a, b: 42
+
+Here are our guesses:
+
+    >>> _inputs = ["Jennifer", "50", "75", "42"]
+
+Let's check the basic version of the game!
+
+    >>> import game
+    Howdy, what's your name?
+    (type in your name) Jennifer
+    Jennifer, I'm thinking of a number between 1 and 100.
+    Can you guess what the number is?
+    Your guess? 50
+    Your guess is too high, try again.
+    Your guess? 75
+    Your guess is too high, try again.
+    Your guess? 42
+    Well done, Jennifer!
+    You found my number in 3 tries!
+
+Here are our new guesses, since the original _inputs should be empty:
+
+    >>> _inputs = ["Jennifer", "50", "75", "42", "y", "4.2", "1024", "apple", "42", "n"]
+
+Now, let's try the more sophisticated guessing game:
+
+    >>> import game_adv
+    Howdy, what's your name?
+    (type in your name) Jennifer
+    Jennifer, I'm thinking of a number between 1 and 100.
+    Can you guess what the number is?
+    Your guess? 50
+    Your guess is too high, try again.
+    Your guess? 75
+    Your guess is too high, try again.
+    Your guess? 42
+    Well done, Jennifer!
+    You found my number in 3 tries!
+    Do you want to play again? y
+    Jennifer, I'm thinking of a number between 1 and 100.
+    Can you guess what the number is?
+    Your guess? 4.2
+    That's not an integer, try again
+    Your guess? 1024
+    That's not between 1 and 100. Try again.
+    Your guess? apple
+    That's not an integer, try again
+    Your guess? 42
+    Well done, Jennifer!
+    You found my number in 1 tries!
+    Do you want to play again? n
+    Your best score was 1.
