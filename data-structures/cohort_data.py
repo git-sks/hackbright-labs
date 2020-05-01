@@ -237,7 +237,18 @@ def get_cohort_for(filename, name):
       - str: the person's cohort or None
     """
 
-    # TODO: replace this with your code
+    school_data = all_data(filename)
+
+    for profile in school_data:
+      profile_name = profile[0]
+
+      if profile_name == name:
+        profile_cohort = profile[3]
+
+        return profile_cohort
+
+    # return None if go thru all the data and do not find the name
+    return None
 
 
 def find_duped_last_names(filename):
