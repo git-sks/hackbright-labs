@@ -128,9 +128,47 @@ def all_names_by_house(filename):
     ghosts = []
     instructors = []
 
-    # TODO: replace this with your code
+    # get all the school data from the file
+    school_data = all_data(filename)
 
-    return []
+    # sort all the profiles based on their houses
+    for profile in school_data:
+      profile_name = profile[0]
+      profile_house = profile[1]
+
+      if profile_house == "":
+        # if profile's house is empty, must be either instructor or ghost
+        profile_cohort = profile[3]
+
+        # cohort indicates is instructor, so add to instructors list
+        if profile_cohort == "I":
+          instructors.append(profile_name)
+        elif profile_cohort == "G":
+          # otherwise it's a ghost, so add to the ghosts
+          ghosts.append(profile_name)
+
+      elif profile_house == "Dumbledore's Army":
+        dumbledores_army.append(profile_name)
+
+      elif profile_house == "Gryffindor":
+        gryffindor.append(profile_name)
+
+      elif profile_house == "Hufflepuff":
+        hufflepuff.append(profile_name)
+
+      elif profile_house == "Ravenclaw":
+        ravenclaw.append(profile_name)
+
+      elif profile_house == "Slytherin":
+        slytherin.append(profile_name)
+
+    # sort all the individual house lists
+    # and put them into one list of house lists
+    houses = [sorted(dumbledores_army), sorted(gryffindor),
+              sorted(hufflepuff), sorted(ravenclaw),
+              sorted(slytherin), sorted(ghosts), sorted(instructors)]
+
+    return houses
 
 
 def all_data(filename):
