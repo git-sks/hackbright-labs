@@ -122,7 +122,19 @@ def all_data(filename):
 
     all_data = []
 
-    # TODO: replace this with your code
+    file = open(filename)
+    for line in file:
+      line = line.rstrip()
+      profile = line.split('|')
+
+      first_name = profile[0]
+      last_name = profile[1]
+      house = profile[2]
+      advisor = profile[3]
+      cohort = profile[4]
+
+      profile = (f"{first_name} {last_name}", house, advisor, cohort)
+      all_data.append(profile)
 
     return all_data
 
