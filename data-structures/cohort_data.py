@@ -194,6 +194,7 @@ def all_data(filename):
 
     # retrieve & convert the data given by the datafile into something parsable
     file = open(filename)
+
     for line in file:
       line = line.rstrip()
       profile_token = line.split('|')
@@ -269,6 +270,7 @@ def find_duped_last_names(filename):
     duped_last_names = set()
 
     school_data = all_data(filename)
+
     for profile in school_data:
       # separate the name in the profile into first and last name
       # then get the last name
@@ -298,7 +300,27 @@ def get_housemates_for(filename, name):
     {'Angelina Johnson', ..., 'Seamus Finnigan'}
     """
 
-    # TODO: replace this with your code
+    # get a list of all the names, sorted by houses
+    houses = all_names_by_house(filename)
+
+    # get a list of people in given student's cohort and make it a set
+    student_cohort = get_cohort_for(filename, name)
+    cohort_members = set(students_by_cohort(filename, student_cohort))
+
+    # go through each of the houses until you find the house with the name in it
+    for house in houses:
+      if name in house:
+        # once determine the house, make a set of the house members
+        house_members = set(house)
+
+        # housemates will be the intersection of house_members & cohort_members
+        # but because the intersection will also include the given student
+        # need to remove the given student
+        housemates = house_members & cohort_members
+        housemates = housemates - set([name])
+        break
+
+    return housemates
 
 
 ##############################################################################
