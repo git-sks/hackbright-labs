@@ -17,8 +17,19 @@ def all_houses(filename):
 
     houses = set()
 
-    # TODO: replace this with your code
+    # get all the school profile data based on the filename
+    school_data = all_data(filename)
 
+    # go through each profile in the school data
+    for profile in school_data:
+      # retrieve the house information from the profile
+      house = profile[1]
+
+      # only add the house to the set of houses if there is a house
+      if not house == '':
+        houses.add(house)
+
+    # return the set of all house names
     return houses
 
 
@@ -122,20 +133,27 @@ def all_data(filename):
 
     all_data = []
 
+    # retrieve and convert the data given by the data file into something parsable
     file = open(filename)
     for line in file:
       line = line.rstrip()
-      profile = line.split('|')
+      profile_token = line.split('|')
 
-      first_name = profile[0]
-      last_name = profile[1]
-      house = profile[2]
-      advisor = profile[3]
-      cohort = profile[4]
+      # parse the data to their individual profile elements
+      first_name = profile_token[0]
+      last_name = profile_token[1]
+      house = profile_token[2]
+      advisor = profile_token[3]
+      cohort = profile_token[4]
 
-      profile = (f"{first_name} {last_name}", house, advisor, cohort)
+      full_name = f"{first_name} {last_name}"
+
+      # collect them together into a profile tuple
+      profile = (full_name, house, advisor, cohort)
+      # add the single profile into the list of all data
       all_data.append(profile)
 
+    # return the list of all the profile data
     return all_data
 
 
