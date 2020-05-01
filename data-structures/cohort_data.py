@@ -71,7 +71,7 @@ def students_by_cohort(filename, cohort='All'):
       profile_cohort = profile[3]
 
       if profile_cohort == 'I' or profile_cohort == 'G':
-        # don't add to the students list if the profile belongs to a prof or ghost
+        # don't add to the students list if the profile belongs to a prof/ghost
         # and move on to the next profile
         continue
 
@@ -192,7 +192,7 @@ def all_data(filename):
 
     all_data = []
 
-    # retrieve and convert the data given by the data file into something parsable
+    # retrieve & convert the data given by the datafile into something parsable
     file = open(filename)
     for line in file:
       line = line.rstrip()
@@ -265,7 +265,25 @@ def find_duped_last_names(filename):
       - set[str]: a set of strings
     """
 
-    # TODO: replace this with your code
+    last_names_encountered = set()
+    duped_last_names = set()
+
+    school_data = all_data(filename)
+    for profile in school_data:
+      # separate the name in the profile into first and last name
+      # then get the last name
+      name = profile[0].split(" ")
+      last_name = name[1]
+
+      if last_name in last_names_encountered:
+        # if encounter a dupe last name, add it to the list of dupe last names
+        duped_last_names.add(last_name)
+      else:
+        # add it to the set of last names encountered
+        last_names_encountered.add(last_name)
+
+    # after gone through all the names in the data, return the duped last names
+    return duped_last_names
 
 
 def get_housemates_for(filename, name):
