@@ -63,8 +63,29 @@ def students_by_cohort(filename, cohort='All'):
 
     students = []
 
-    # TODO: replace this with your code
+    # get all the school profile data based on the filename
+    school_data = all_data(filename)
 
+    for profile in school_data:
+      # get the individual profile's cohort
+      profile_cohort = profile[3]
+
+      if profile_cohort == 'I' or profile_cohort == 'G':
+        # don't add to the students list if the profile belongs to a prof or ghost
+        # and move on to the next profile
+        continue
+
+      # any remaining profiles from hereon should be a student
+      else:
+        if (cohort == 'All') or (profile_cohort == cohort):
+          # if cohort is 'All', no cohort filtering
+          # or if the profile_cohort matches the cohort requested
+          # then get the student's name and add it to the list of students
+          profile_name = profile[0]
+
+          students.append(profile_name)
+
+    # return a sorted list of the students for the cohort filter requested
     return sorted(students)
 
 
