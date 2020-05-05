@@ -11,8 +11,9 @@ def open_and_read_file(file_path):
     """
 
     # your code goes here
+    text = open(file_path).read()
 
-    return "Contents of your file as one long string"
+    return text
 
 
 def make_chains(text_string):
@@ -40,9 +41,24 @@ def make_chains(text_string):
         [None]
     """
 
+    # Dictionary of individual Markov chains
     chains = {}
 
-    # your code goes here
+    # Break the text down into individual words
+    words = text_string.split()
+
+    # Go through the words and form chains consisting of the word at the index
+    # and the word that follows. Then add it to the chains dictionary
+    for index in range(len(words) - 1):
+        # Form a chain from the word at index, and the word that follows
+        chain = (words[index], words[index + 1])
+
+        # If not the last two words in the text, make the tuple a key in chains,
+        # add the word that follows those two words to the list value
+        # If last two words, nothing follows, so nothing to append.
+        if not index == len(words) - 2:
+            chains[chain] = chains.get(chain, [])
+            chains[chain].append(words[index + 2])
 
     return chains
 
