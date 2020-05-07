@@ -91,8 +91,9 @@ async def on_message(message):
     if message.content == 'Gimme the words':
         await message.channel.send(make_text(chains))
 
-    # if message.content == 'Releasing SS Markovbot':
-        # how to close the bot process???
+    if message.content == 'Releasing SS Markovbot':
+        await message.channel.send('Goodbye')
+        await logout()
 
 
 client.run(os.environ['DISCORD_TOKEN'])
