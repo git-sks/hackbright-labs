@@ -1,6 +1,8 @@
 """A Markov chain generator that can tweet random messages."""
 
 import sys
+import os
+import discord
 from random import choice
 
 
@@ -64,3 +66,33 @@ text = open_and_read_file(filenames)
 
 # Get a Markov chain
 chains = make_chains(text)
+
+
+# Handling the bot portion
+client = discord.Client()
+
+
+@client.event
+async def on_ready():
+    print(f'Successfully connected! Logged in as {client.user}.')
+
+
+@client.event
+async def on_message(message):
+    # If the message is from the bot, ignore and do nothing
+    if message.author == client.user:
+        return
+
+    # Test if bot is working with a summoning trigger
+    if message.content == 'Summoning SS Markovbot':
+        await message.channel.send('I have been summoned!')
+
+    # Trigger making a markov chain with the prompt "Gimme the words"
+    if message.content == 'Gimme the words':
+        await message.channel.send(make_text(chains))
+
+    # if message.content == 'Releasing SS Markovbot':
+        # how to close the bot process???
+
+
+client.run(os.environ['DISCORD_TOKEN'])
